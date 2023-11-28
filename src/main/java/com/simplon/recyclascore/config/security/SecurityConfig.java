@@ -12,9 +12,9 @@ public class SecurityConfig {
         return new WebMvcConfigurer() {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/**")  // Permet CORS pour toutes les routes
-                        .allowedOrigins("http://localhost:4200")  // Permet l'origine spécifiée
-                        .allowedMethods("*");  // Permet toutes les méthodes HTTP
+                registry.addMapping("/**")
+                        .allowedOrigins("http://localhost:4200")
+                        .allowedMethods("*");
             }
         };
     }
