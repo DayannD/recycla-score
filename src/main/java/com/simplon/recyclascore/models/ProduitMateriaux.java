@@ -11,7 +11,7 @@ import lombok.Setter;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "`produit_matériaux`")
+@Table(name = "`produit_materiaux`")
 public class ProduitMateriaux {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,9 +22,9 @@ public class ProduitMateriaux {
     private Produit idProduit;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "`ID_Matériau`")
-    private Materiaux idMatériau;
+    @JoinColumn(name = "`ID_Materiau`")
+    private Materiaux idMateriau;
 
-    @Column(name = "`Quantité`")
-    private Float quantité;
+    @Column(name = "`Quantite`")
+    private Float quantite;
 }

@@ -26,7 +26,7 @@ public class Utilisateur {
     private String motDePasse;
 
     @Size(max = 50)
-    @Column(name = "`Rôle`", length = 50)
-    private String rôle;
+    @Column(name = "`Role`", length = 50)
+    private String role;
 
 }

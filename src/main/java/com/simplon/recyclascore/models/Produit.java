@@ -22,8 +22,8 @@ public class Produit {
     @Column(name = "Description")
     private String description;
 
-    @Column(name = "`Score_Recyclabilité`")
-    private Float scoreRecyclabilité;
+    @Column(name = "`Score_Recyclabilite`")
+    private Float scoreRecyclabilite;
 
     @Column(name = "Poids")
     private Float poids;

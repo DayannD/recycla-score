@@ -11,24 +11,23 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name = "`matériaux`")
+@Table(name = "`materiaux`")
 public class Materiaux {
     @Id
-    @Column(name = "`ID_Matériau`", nullable = false)
+    @Column(name = "`ID_Materiau`", nullable = false)
     private Integer id;
 
     @Size(max = 255)
-    @Column(name = "`Nom_Matériau`")
-    private String nomMatériau;
+    @Column(name = "`Nom_Materiau`")
+    private String nomMateriau;
 
     @Size(max = 100)
     @Column(name = "Type_Recyclage", length = 100)
     private String typeRecyclage;
 
-    @Column(name = "`Coût_Recyclage`")
-    private Float coûtRecyclage;
+    @Column(name = "`Cout_Recyclage`")
+    private Float coutRecyclage;
 
     @Column(name = "Energie_Recyclage")
     private Float energieRecyclage;
-
 }
