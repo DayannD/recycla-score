@@ -1,6 +1,6 @@
 package com.simplon.recyclascore.models;
 
-import com.simplon.recyclascore.models.EnumMatererial.EnumMaterial;
+import com.simplon.recyclascore.models.Enum.EnumMaterial;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "monomaterial", schema = "recycla-score", catalog = "")
+@Table(name = "Monomaterial", schema = "recycla-score", catalog = "")
 public class MonoMaterial {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,6 +20,7 @@ public class MonoMaterial {
 
     @Enumerated(EnumType.STRING)
     private EnumMaterial material;
+
     private String recyclability;
 }
 

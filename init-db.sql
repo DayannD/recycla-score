@@ -19,7 +19,7 @@ CREATE TABLE IF NOT EXISTS Materiaux (
     );
 
 -- Création de la table ProduitMatériaux
-CREATE TABLE IF NOT EXISTS ProduitMateriaux (
+CREATE TABLE IF NOT EXISTS Produit_Materiaux (
                                                 ID INT AUTO_INCREMENT PRIMARY KEY,
                                                 ID_Produit INT,
                                                 ID_Materiau INT,
@@ -45,7 +45,7 @@ INSERT INTO Materiaux (Nom_Materiau, Type_Recyclage, Cout_Recyclage, Energie_Rec
 ('Verre', 'Verre', 0.1, 0.15),
 ('Papier', 'Papier', 0.02, 0.05);
 
-INSERT INTO ProduitMateriaux (ID_Produit, ID_Materiau, Quantite) VALUES (1, 1, 0.5),
+INSERT INTO Produit_Materiaux (ID_Produit, ID_Materiau, Quantite) VALUES (1, 1, 0.5),
 (1, 2, 0.5),
 (2, 3, 1.0),
 (3, 4, 0.3),

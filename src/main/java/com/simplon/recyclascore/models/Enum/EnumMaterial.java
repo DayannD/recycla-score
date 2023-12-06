@@ -1,4 +1,4 @@
-package com.simplon.recyclascore.models.EnumMatererial;
+package com.simplon.recyclascore.models.Enum;
 
 public enum EnumMaterial {
     ACIER_INOX("acier inoxydable"),

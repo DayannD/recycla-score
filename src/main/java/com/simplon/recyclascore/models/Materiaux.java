@@ -11,7 +11,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name = "`materiaux`")
+@Table(name = "`Materiaux`")
 public class Materiaux {
     @Id
     @Column(name = "`ID_Materiau`", nullable = false)

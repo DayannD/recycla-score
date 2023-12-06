@@ -17,6 +17,7 @@ public class MateriauxService implements IMateriauxService {
 
     @Override
     public List<Materiaux> findAll() {
+        List<Materiaux> materiaux = materiauxRepository.findAll();
         return materiauxRepository.findAll();
     }
 

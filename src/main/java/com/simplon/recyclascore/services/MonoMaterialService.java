@@ -1,6 +1,6 @@
 package com.simplon.recyclascore.services;
 
-import com.simplon.recyclascore.models.EnumMatererial.EnumMaterial;
+import com.simplon.recyclascore.models.Enum.EnumMaterial;
 import com.simplon.recyclascore.models.MonoMaterial;
 import com.simplon.recyclascore.repositories.IMonoMaterialRepository;
 import com.simplon.recyclascore.services.IServices.IMonoMaterialService;

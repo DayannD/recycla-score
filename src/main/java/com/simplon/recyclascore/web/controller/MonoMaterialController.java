@@ -1,10 +1,9 @@
 package com.simplon.recyclascore.web.controller;
 
-import com.simplon.recyclascore.models.EnumMatererial.EnumMaterial;
+import com.simplon.recyclascore.models.Enum.EnumMaterial;
 import com.simplon.recyclascore.models.MonoMaterial;
 import com.simplon.recyclascore.services.IServices.IMonoMaterialService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 @RestController

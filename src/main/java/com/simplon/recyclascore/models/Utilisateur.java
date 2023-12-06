@@ -1,9 +1,7 @@
 package com.simplon.recyclascore.models;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import com.simplon.recyclascore.models.Enum.EnumMaterial;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
@@ -11,7 +9,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name = "utilisateurs")
+@Table(name = "Utilisateurs")
 public class Utilisateur {
     @Id
     @Column(name = "ID_Utilisateur", nullable = false)
@@ -25,8 +23,7 @@ public class Utilisateur {
     @Column(name = "Mot_de_Passe")
     private String motDePasse;
 
-    @Size(max = 50)
-    @Column(name = "`Role`", length = 50)
+    @Enumerated(EnumType.STRING)
+    @Column(name = "Role")
     private String role;
-
 }
