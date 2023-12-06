@@ -4,6 +4,7 @@ import com.simplon.recyclascore.models.Materiaux;
 import com.simplon.recyclascore.services.IServices.IMateriauxService;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Role;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,6 +30,7 @@ public class MateriauxController {
     }
 
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<Materiaux> createMateriaux(@RequestBody Materiaux materiaux) {
         return ResponseEntity.ok(materiauxService.save(materiaux));
     }

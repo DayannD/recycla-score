@@ -33,7 +33,6 @@ CREATE TABLE IF NOT EXISTS Utilisateurs (
                                             ID_Utilisateur INT AUTO_INCREMENT PRIMARY KEY,
                                             Nom_Utilisateur VARCHAR(255) NOT NULL,
     Mot_de_Passe VARCHAR(255) NOT NULL,
-    Role VARCHAR(50) NOT NULL
     );
 INSERT INTO Produits (Nom_Produit, Description, Score_Recyclabilite, Poids, Volume) VALUES ('Produit A', 'Description du Produit A', 0.8, 1.2, 0.003),
 ('Produit B', 'Description du Produit B', 0.6, 0.8, 0.002),
@@ -52,5 +51,5 @@ INSERT INTO Produit_Materiaux (ID_Produit, ID_Materiau, Quantite) VALUES (1, 1, 
 (4, 1, 0.2),
 (4, 2, 0.8);
 
-INSERT INTO Utilisateurs (Nom_Utilisateur, Mot_de_Passe, Role) VALUES ('admin', 'adminpass', 'Administrateur'),
-('user', 'userpass', 'Utilisateur');
+INSERT INTO Utilisateurs (Nom_Utilisateur, Mot_de_Passe, Role) VALUES ('admin', 'adminpass'),
+('user', 'userpass');
