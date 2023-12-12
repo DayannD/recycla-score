@@ -15,6 +15,9 @@ import java.security.SecureRandom;
 import java.time.Instant;
 import java.util.Random;
 
+/**
+ * Service de gestion des validations
+ */
 @Service
 @AllArgsConstructor
 public class ValidationService implements IValidationService {
@@ -22,6 +25,11 @@ public class ValidationService implements IValidationService {
   private IValidationRepository validationRepository;
   private INotificationService notificationService;
 
+  /**
+   * Enregistre une validation en base de données et envoie un mail de validation
+   * @param utilisateur
+   * @throws MessagingException
+   */
   @Override
   public void enregistrer(Utilisateur utilisateur) throws MessagingException {
     Validation validation = new Validation();
@@ -41,6 +49,10 @@ public class ValidationService implements IValidationService {
     notificationService.sendNotification(validation);
   }
 
+  /**
+   * Active le compte un utilisateur
+   * @param code
+   */
   @Override
   public void activateUtilisateur(String code) {
     Validation validation = validationRepository.findByCode(code).orElseThrow(() -> new InvalidCodeException("Code invalide"));

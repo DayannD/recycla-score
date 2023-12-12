@@ -15,6 +15,9 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+/**
+ * Service de gestion des utilisateurs
+ */
 @Service
 @AllArgsConstructor
 public class UtilisateurService implements IUtilisateurService, UserDetailsService {
@@ -23,6 +26,11 @@ public class UtilisateurService implements IUtilisateurService, UserDetailsServi
   private IUtilisateurRepository utilisateurRepository;
   private IValidationService validationService;
 
+  /**
+   * Créer un utilisateur
+   * @param utilisateur
+   * @throws MessagingException
+   */
   @Override
   public void createUtilisateur(Utilisateur utilisateur) throws MessagingException {
     if (!utilisateur.getEmail().contains("@")) {
@@ -45,6 +53,12 @@ public class UtilisateurService implements IUtilisateurService, UserDetailsServi
     this.validationService.enregistrer(utilisateur);
   }
 
+  /**
+   * Charge un utilisateur par son email pour Spring Security
+   * @param username
+   * @return
+   * @throws UsernameNotFoundException
+   */
   @Override
   public Utilisateur loadUserByUsername(String username) throws UsernameNotFoundException {
     return utilisateurRepository.findByEmail(username)

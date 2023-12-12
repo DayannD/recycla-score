@@ -13,17 +13,34 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 
+/**
+ *
+ * Filtre pour vérifier le token
+ */
 @Service
 public class JwtFilter extends OncePerRequestFilter {
 
   private final IUtilisateurService utilisateurService;
   private final JwtService jwtService;
 
+  /**
+   *
+   * @param utilisateurService
+   * @param jwtService
+   */
   public JwtFilter(IUtilisateurService utilisateurService, JwtService jwtService) {
     this.utilisateurService = utilisateurService;
     this.jwtService = jwtService;
   }
 
+  /**
+   * Vérifie le token et l'authentifie
+   * @param request
+   * @param response
+   * @param filterChain
+   * @throws ServletException
+   * @throws IOException
+   */
   @Override
   protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
     String token = null;

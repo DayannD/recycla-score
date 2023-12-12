@@ -16,18 +16,28 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+/**
+ * Classe de configuration de la sécurité
+ */
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
 
     private final JwtFilter jwtFilter;
     private final ConfigurationCryptageMotDePasse cryptageMotDePasse;
-
+  /**
+   * Constructeur
+   * @param jwtFilter
+   * @param cryptageMotDePasse
+   */
   public SecurityConfig(JwtFilter jwtFilter, ConfigurationCryptageMotDePasse cryptageMotDePasse) {
     this.jwtFilter = jwtFilter;
     this.cryptageMotDePasse = cryptageMotDePasse;
   }
 
+  /**
+   * Configure les règles de CORS
+   */
   @Bean
     public WebMvcConfigurer corsConfigurer() {
         return new WebMvcConfigurer() {
@@ -40,7 +50,12 @@ public class SecurityConfig {
         };
     }
 
-
+    /**
+     * Configure les règles de sécurité
+     * @param httpSecurity
+     * @return
+     * @throws Exception
+     */
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         return
@@ -68,11 +83,22 @@ public class SecurityConfig {
             .build();
     }
 
+    /**
+     * Configure l'authentification
+     * @param authenticationConfiguration
+     * @return
+     * @throws Exception
+     */
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
     }
 
+  /**
+   *
+   * @param userDetailsService
+   * @return
+   */
     @Bean
     public AuthenticationProvider authenticationProvider(UserDetailsService userDetailsService) {
         DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();

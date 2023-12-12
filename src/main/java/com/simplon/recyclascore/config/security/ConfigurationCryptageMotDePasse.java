@@ -5,6 +5,10 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+/**
+ *
+ * Configuration de l'encodage du mot de passe
+ */
 @Configuration
 public class ConfigurationCryptageMotDePasse {
 
