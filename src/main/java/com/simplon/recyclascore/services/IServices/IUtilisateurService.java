@@ -5,5 +5,7 @@ import jakarta.mail.MessagingException;
 
 public interface IUtilisateurService {
 
-  public void createUtilisateur(Utilisateur utilisateur) throws MessagingException;
+  void createUtilisateur(Utilisateur utilisateur) throws MessagingException;
+
+  Utilisateur loadUserByUsername(String username);
 }

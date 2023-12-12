@@ -3,6 +3,7 @@ package com.simplon.recyclascore.web.controller;
 import com.simplon.recyclascore.models.Enum.EnumMaterial;
 import com.simplon.recyclascore.models.MonoMaterial;
 import com.simplon.recyclascore.services.IServices.IMonoMaterialService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,7 +15,7 @@ public class MonoMaterialController {
     private final IMonoMaterialService monoMaterialService;
 
     @PostMapping("")
-    public String addMonoMaterial(@RequestBody MonoMaterial monoMaterial) {
+    public String addMonoMaterial(@Valid @RequestBody MonoMaterial monoMaterial) {
         monoMaterialService.addMonoMaterial(monoMaterial);
         return "ok";
     }

@@ -22,11 +22,9 @@ public class Validation {
 
   private Instant creationDate;
   private Instant expire;
-  private Instant Activation;
+  private Instant activation;
   private String code;
 
-  @OneToOne(cascade = CascadeType.ALL)
+  @OneToOne(cascade = CascadeType.DETACH)
   private Utilisateur utilisateur;
-
-
 }
