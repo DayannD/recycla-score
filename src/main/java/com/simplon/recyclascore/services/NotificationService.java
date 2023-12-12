@@ -8,11 +8,19 @@ import lombok.AllArgsConstructor;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
-
+/**
+ * Service de gestion des notifications
+ */
 @Service
 @AllArgsConstructor
 public class NotificationService implements INotificationService {
   private final JavaMailSender javaMailSender;
+
+  /**
+   * Envoie un mail de notification
+   * @param validation
+   * @throws MessagingException
+   */
   @Override
   public void sendNotification(Validation validation) throws MessagingException {
     MimeMessage mimeMessage = javaMailSender.createMimeMessage();
