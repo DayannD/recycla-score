@@ -8,6 +8,7 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.security.Key;
@@ -19,6 +20,7 @@ import java.util.function.Function;
  * Service de gestion des tokens JWT
  */
 @Service
+@Slf4j
 @AllArgsConstructor
 public class JwtService {
 
@@ -43,7 +45,7 @@ public class JwtService {
   private Map<String, String> generateToken(Utilisateur utilisateur) {
     final long currentTime = System.currentTimeMillis();
     final long expirationTime = currentTime + 1000 * 60 * 30;
-
+    log.warn("VOICI L'UTILISATEUR " + utilisateur.getRole().getLibelle().toString());
     final Map<String, Object> claims = Map.of(
       "token", "token",
       "role", utilisateur.getRole().getLibelle().toString(),

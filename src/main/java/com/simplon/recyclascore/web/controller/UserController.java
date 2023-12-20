@@ -1,13 +1,14 @@
 package com.simplon.recyclascore.web.controller;
 
-import com.simplon.recyclascore.DTO.ConnexionUserDTO;
+import com.simplon.recyclascore.models.DTO.ConnexionUserDTO;
 import com.simplon.recyclascore.config.security.JwtService;
 import com.simplon.recyclascore.exception.InvalidCodeException;
 import com.simplon.recyclascore.models.Utilisateur;
 import com.simplon.recyclascore.services.IServices.IUtilisateurService;
 import com.simplon.recyclascore.services.IServices.IValidationService;
-import java.util.Collections;
 
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -56,14 +57,27 @@ public class UserController {
   }
 
   @PostMapping("/connexion")
-  public Map<String, String> connexionUtilisateur(@RequestBody ConnexionUserDTO connexionUserDTO) {
+  public ResponseEntity<String> connexionUtilisateur(@RequestBody ConnexionUserDTO connexionUserDTO, HttpServletResponse response) {
     final Authentication authenticate = authenticationManager.authenticate(
       new UsernamePasswordAuthenticationToken(connexionUserDTO.username(), connexionUserDTO.password())
     );
     if (authenticate.isAuthenticated()) {
-      return jwtService.createToken(connexionUserDTO.username());
+      if (!utilisateurService.actifCompte(connexionUserDTO.username())) {
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Votre compte n'est pas actif");
+      }
+      Map<String,String> token = jwtService.createToken(connexionUserDTO.username());
+
+      log.info(token.toString());
+      Cookie cookie = new Cookie("token", token.get("Bearer"));
+      // a mettre quand on sera en https
+      //cookie.setHttpOnly(true);
+      //cookie.setSecure(true);
+      cookie.setPath("/");
+      response.addCookie(cookie);
+      log.info(cookie.toString());
+      return ResponseEntity.ok("Vous êtes connecté");
     } else {
-      return Collections.emptyMap();
+      return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Identifiants incorrects");
     }
   }
 }

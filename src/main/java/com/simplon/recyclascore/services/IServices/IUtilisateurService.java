@@ -8,4 +8,6 @@ public interface IUtilisateurService {
   void createUtilisateur(Utilisateur utilisateur) throws MessagingException;
 
   Utilisateur loadUserByUsername(String username);
+
+  boolean actifCompte(String username);
 }

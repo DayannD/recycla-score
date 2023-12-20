@@ -10,6 +10,7 @@ import com.simplon.recyclascore.services.IServices.IUtilisateurService;
 import com.simplon.recyclascore.services.IServices.IValidationService;
 import jakarta.mail.MessagingException;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -19,12 +20,13 @@ import org.springframework.stereotype.Service;
  * Service de gestion des utilisateurs
  */
 @Service
+@Slf4j
 @AllArgsConstructor
 public class UtilisateurService implements IUtilisateurService, UserDetailsService {
 
-  private BCryptPasswordEncoder bCryptPasswordEncoder;
-  private IUtilisateurRepository utilisateurRepository;
-  private IValidationService validationService;
+  private final BCryptPasswordEncoder bCryptPasswordEncoder;
+  private final IUtilisateurRepository utilisateurRepository;
+  private final IValidationService validationService;
 
   /**
    * Créer un utilisateur
@@ -63,5 +65,13 @@ public class UtilisateurService implements IUtilisateurService, UserDetailsServi
   public Utilisateur loadUserByUsername(String username) throws UsernameNotFoundException {
     return utilisateurRepository.findByEmail(username)
       .orElseThrow(() -> new UsernameNotFoundException("Utilisateur non trouvé"));
+  }
+
+  @Override
+  public boolean actifCompte(String username) {
+    Utilisateur utilisateur = utilisateurRepository.findByEmail(username)
+      .orElseThrow(() -> new UsernameNotFoundException("Utilisateur non trouvé"));
+    log.warn("voici l'utilisateur : " + utilisateur.isActif());
+    return utilisateur.isActif();
   }
 }

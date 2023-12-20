@@ -45,7 +45,8 @@ public class SecurityConfig {
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
                   .allowedOrigins("http://localhost:4200")
-                  .allowedMethods("*");
+                  .allowedMethods("*")
+                  .allowCredentials(true);
             }
         };
     }
@@ -68,6 +69,7 @@ public class SecurityConfig {
               authorize ->
                 //authorise tout le monde à accéder à la page d'inscription
                 authorize
+                  .requestMatchers("/admin/**").hasRole("ADMIN")
                   .requestMatchers("/inscription").permitAll()
                   .requestMatchers("/connexion").permitAll()
                   .requestMatchers("/activation").permitAll()

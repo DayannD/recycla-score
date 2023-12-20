@@ -22,8 +22,8 @@ import java.util.Random;
 @AllArgsConstructor
 public class ValidationService implements IValidationService {
 
-  private IValidationRepository validationRepository;
-  private INotificationService notificationService;
+  private final IValidationRepository validationRepository;
+  private final INotificationService notificationService;
 
   /**
    * Enregistre une validation en base de données et envoie un mail de validation

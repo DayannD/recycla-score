@@ -1,6 +1,8 @@
 package com.simplon.recyclascore.services;
 
+import com.simplon.recyclascore.models.DTO.MateriauxDTO;
 import com.simplon.recyclascore.models.Materiaux;
+import com.simplon.recyclascore.models.mappers.MateriauxMapper;
 import com.simplon.recyclascore.repositories.IMateriauxRepository;
 import com.simplon.recyclascore.services.IServices.IMateriauxService;
 import lombok.AllArgsConstructor;
@@ -14,6 +16,7 @@ import java.util.Optional;
 public class MateriauxService implements IMateriauxService {
 
     private final IMateriauxRepository materiauxRepository;
+    private final MateriauxMapper materiauxMapper;
 
     @Override
     public List<Materiaux> findAll() {
@@ -21,17 +24,17 @@ public class MateriauxService implements IMateriauxService {
     }
 
     @Override
-    public Optional<Materiaux> findById(Long id) {
+    public Optional<Materiaux> findById(int id) {
         return materiauxRepository.findById(id);
     }
 
     @Override
-    public Materiaux save(Materiaux materiaux) {
-        return materiauxRepository.save(materiaux);
+    public void save(MateriauxDTO materiauxDTO) {
+        this.materiauxRepository.save(this.materiauxMapper.toEntity(materiauxDTO));
     }
 
     @Override
-    public void delete(Long id) {
+    public void delete(int id) {
         materiauxRepository.deleteById(id);
     }
 }

@@ -3,8 +3,10 @@ package com.simplon.recyclascore.config.security;
 import com.simplon.recyclascore.services.IServices.IUtilisateurService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -18,6 +20,7 @@ import java.io.IOException;
  * Filtre pour vérifier le token
  */
 @Service
+@Slf4j
 public class JwtFilter extends OncePerRequestFilter {
 
   private final IUtilisateurService utilisateurService;
@@ -47,15 +50,21 @@ public class JwtFilter extends OncePerRequestFilter {
     String username = null;
     boolean isTokenExpired = true;
 
-    final String authorization = request.getHeader("Authorization");
-    if (authorization != null && authorization.startsWith("Bearer ")) {
-      token = authorization.substring(7);
-      isTokenExpired = jwtService.isTokenExpired(token);
-      username = jwtService.lireUsername(token);
+    final Cookie[] cookies = request.getCookies();
+    if (cookies != null) {
+      for (Cookie cookie : cookies) {
+        if (cookie.getName().equals("token")) {
+          log.warn("Token trouvé :" + cookie.getValue());
+          token = cookie.getValue();
+          isTokenExpired = jwtService.isTokenExpired(token);
+          username = jwtService.lireUsername(token);
+        }
+      }
     }
 
     if (!isTokenExpired && username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
       UserDetails userDetails = utilisateurService.loadUserByUsername(username);
+      log.warn("UserDetails : " + userDetails.getAuthorities());
       UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
       SecurityContextHolder.getContext().setAuthentication(authenticationToken);
     }
