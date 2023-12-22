@@ -30,7 +30,11 @@ public class UserController {
   private final IValidationService validationService;
   private final AuthenticationManager authenticationManager;
   private final JwtService jwtService;
-  
+
+  /**
+   * @param utilisateur
+   * @PostMapping("/inscription") : crée un utilisateur
+   */
   @PostMapping("/inscription")
   @ResponseStatus(HttpStatus.CREATED)
   public void createUtilisateur(@Valid @RequestBody Utilisateur utilisateur) {
@@ -41,6 +45,11 @@ public class UserController {
     }
   }
 
+  /**
+   * @param code
+   * @return ResponseEntity<String>
+   * @GetMapping("/activation") : active un utilisateur
+   */
   @GetMapping("/activation")
   public ResponseEntity<String> activateUtilisateur(@RequestParam("code") String code) {
     try {
@@ -56,6 +65,13 @@ public class UserController {
     }
   }
 
+
+  /**
+   * @param connexionUserDTO
+   * @param response
+   * @return ResponseEntity<String>
+   * @PostMapping("/connexion") : connecte un utilisateur et lui donne un token
+   */
   @PostMapping("/connexion")
   public ResponseEntity<String> connexionUtilisateur(@RequestBody ConnexionUserDTO connexionUserDTO, HttpServletResponse response) {
     final Authentication authenticate = authenticationManager.authenticate(

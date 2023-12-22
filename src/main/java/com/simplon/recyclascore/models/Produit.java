@@ -1,9 +1,12 @@
 package com.simplon.recyclascore.models;
 
+import com.simplon.recyclascore.models.Enum.EnumTag;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.util.List;
 
 @Getter
 @Setter
@@ -35,4 +38,10 @@ public class Produit {
     @Size(max = 255)
     @Column(name = "URL_Image")
     private String urlImage;
+
+    @ElementCollection(targetClass = EnumTag.class)
+    @Enumerated(EnumType.STRING)
+    @CollectionTable(name = "produit_tags")
+    @Column(name = "tag")
+    private List<EnumTag> tags;
 }

@@ -13,6 +13,10 @@ public class AdminController {
 
   private final IMateriauxService materiauxService;
 
+  /**
+   * @param materiauxDTO
+   * @PostMapping() : crée un materiaux
+   */
   @PostMapping()
   @ResponseStatus(HttpStatus.CREATED)
   public void createMateriaux(@RequestBody MateriauxDTO materiauxDTO) {

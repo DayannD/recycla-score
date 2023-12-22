@@ -67,6 +67,11 @@ public class UtilisateurService implements IUtilisateurService, UserDetailsServi
       .orElseThrow(() -> new UsernameNotFoundException("Utilisateur non trouvé"));
   }
 
+  /**
+   * Vérifie si un utilisateur est actif
+   * @param username
+   * @return
+   */
   @Override
   public boolean actifCompte(String username) {
     Utilisateur utilisateur = utilisateurRepository.findByEmail(username)

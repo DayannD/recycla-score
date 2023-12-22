@@ -15,11 +15,20 @@ public class MateriauxController {
 
     private final IMateriauxService materiauxService;
 
-    @GetMapping
+    /**
+     * @return String
+     * @GetMapping("") : récupère tous les materiaux
+     */
+    @GetMapping()
     public List<Materiaux> getAllMateriaux() {
         return this.materiauxService.findAll();
     }
 
+    /**
+     * @param id
+     * @return ResponseEntity<Materiaux>
+     * @GetMapping("/{id}") : récupère un materiaux en fonction de son id
+     */
     @GetMapping("/{id}")
     public ResponseEntity<Materiaux> getMateriauxById(@PathVariable int id) {
         return this.materiauxService.findById(id)
@@ -27,6 +36,11 @@ public class MateriauxController {
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
+    /**
+     * @param id
+     * @return String
+     * @PostMapping("") : crée un materiaux
+     */
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteMateriaux(@PathVariable int id) {
         this.materiauxService.delete(id);

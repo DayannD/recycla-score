@@ -34,6 +34,20 @@ CREATE TABLE IF NOT EXISTS Utilisateurs (
                                             Nom_Utilisateur VARCHAR(255) NOT NULL,
     Mot_de_Passe VARCHAR(255) NOT NULL,
     );
+
+CREATE TABLE IF NOT EXISTS Tags (
+                                    ID_Tag INT AUTO_INCREMENT PRIMARY KEY,
+                                    Nom_Tag VARCHAR(255) NOT NULL
+    );
+
+CREATE TABLE IF NOT EXISTS Produit_Tags (
+                                            ID INT AUTO_INCREMENT PRIMARY KEY,
+                                            ID_Produit INT,
+                                            ID_Tag INT,
+                                            FOREIGN KEY (ID_Produit) REFERENCES Produits(ID_Produit),
+    FOREIGN KEY (ID_Tag) REFERENCES Tags(ID_Tag)
+    );
+
 INSERT INTO Produits (Nom_Produit, Description, Score_Recyclabilite, Poids, Volume) VALUES ('Produit A', 'Description du Produit A', 0.8, 1.2, 0.003),
 ('Produit B', 'Description du Produit B', 0.6, 0.8, 0.002),
 ('Produit C', 'Description du Produit C', 0.7, 1.5, 0.004),
@@ -53,3 +67,19 @@ INSERT INTO Produit_Materiaux (ID_Produit, ID_Materiau, Quantite) VALUES (1, 1, 
 
 INSERT INTO Utilisateurs (Nom_Utilisateur, Mot_de_Passe, Role) VALUES ('admin', 'adminpass'),
 ('user', 'userpass');
+
+INSERT INTO Tags (Nom_Tag) VALUES ('Ecology'),
+                                  ('Paper & Cardboard'),
+                                  ('Organic'),
+                                  ('Batteries & D3E'),
+                                  ('Plastic'),
+                                  ('Glass'),
+                                  ('VHU'),
+                                  ('Wood'),
+                                  ('Metal'),
+                                  ('Hazardous Waste');
+
+INSERT INTO Produit_Tags (ID_Produit, ID_Tag) VALUES (1, 1),
+                                                     (2, 2),
+                                                     (3, 3),
+                                                     (4, 4);
