@@ -62,6 +62,10 @@ public class JwtFilter extends OncePerRequestFilter {
       }
     }
 
+    if (isTokenExpired) {
+      response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Token expiré ou invalide");
+    }
+
     if (!isTokenExpired && username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
       UserDetails userDetails = utilisateurService.loadUserByUsername(username);
       log.warn("UserDetails : " + userDetails.getAuthorities());

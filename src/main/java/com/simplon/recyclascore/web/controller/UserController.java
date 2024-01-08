@@ -96,4 +96,13 @@ public class UserController {
       return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Identifiants incorrects");
     }
   }
+
+  @PostMapping("/deconnexion")
+  public ResponseEntity<String> deconnexionUtilisateur(HttpServletResponse response) {
+    Cookie cookie = new Cookie("token", null);
+    cookie.setPath("/");
+    cookie.setMaxAge(0);
+    response.addCookie(cookie);
+    return ResponseEntity.ok("Vous êtes déconnecté");
+  }
 }
