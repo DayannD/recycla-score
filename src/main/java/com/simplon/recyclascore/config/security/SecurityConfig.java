@@ -35,21 +35,24 @@ public class SecurityConfig {
     this.cryptageMotDePasse = cryptageMotDePasse;
   }
 
-  /**
-   * Configure les règles de CORS
-   */
-  @Bean
+    /**
+    * Configure les règles de CORS
+    */
+    @Bean
     public WebMvcConfigurer corsConfigurer() {
         return new WebMvcConfigurer() {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
-                  .allowedOrigins("http://localhost:4200")
-                  .allowedMethods("*")
-                  .allowCredentials(true);
+                        .allowedOrigins("http://localhost:4200")
+                        .allowedHeaders("*")
+                        .allowedMethods("*")
+                        .exposedHeaders("Authorization")
+                        .allowCredentials(true);
             }
         };
     }
+
 
     /**
      * Configure les règles de sécurité

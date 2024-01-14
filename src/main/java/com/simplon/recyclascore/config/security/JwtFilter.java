@@ -62,9 +62,10 @@ public class JwtFilter extends OncePerRequestFilter {
       }
     }
 
-    if (isTokenExpired) {
-      response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Token expiré ou invalide");
-    }
+    // TODO : Verifier si le token est expiré mais fait des bug d'authenfication parfois à cause de ce if
+//    if (isTokenExpired) {
+//      response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Token expiré ou invalide");
+//    }
 
     if (!isTokenExpired && username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
       UserDetails userDetails = utilisateurService.loadUserByUsername(username);
