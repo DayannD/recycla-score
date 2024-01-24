@@ -19,6 +19,9 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
         cache: maven
+    - name: Start Database
+      run: |
+       docker-compose -f ../docker-compose.yaml up -d
     - name: Cache Maven packages
       uses: actions/cache@v2
       with:
