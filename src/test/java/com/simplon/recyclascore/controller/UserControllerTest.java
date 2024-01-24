@@ -7,14 +7,17 @@ import com.simplon.recyclascore.services.IServices.IValidationService;
 import com.simplon.recyclascore.web.controller.UserController;
 import jakarta.servlet.http.HttpServletResponse;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 
 @SpringBootTest
+@ExtendWith(SpringExtension.class)
 class UserControllerTest {
 
   @InjectMocks
