@@ -35,15 +35,4 @@ public class MateriauxController {
                 .map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
-
-    /**
-     * @param id
-     * @return String
-     * @PostMapping("") : crée un materiaux
-     */
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteMateriaux(@PathVariable int id) {
-        this.materiauxService.delete(id);
-        return ResponseEntity.ok().build();
-    }
 }

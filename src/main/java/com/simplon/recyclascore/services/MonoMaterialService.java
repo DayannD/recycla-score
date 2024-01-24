@@ -42,7 +42,7 @@ public class MonoMaterialService implements IMonoMaterialService {
     }
 
     @Override
-    public Iterable<MonoMaterial> getAllMonoMaterialsByMarerial(EnumMaterial material) {
+    public Iterable<MonoMaterial> getAllMonoMaterialsByMaterial(EnumMaterial material) {
         return monoMaterialRepository.findAllByMaterial(material);
     }
 }

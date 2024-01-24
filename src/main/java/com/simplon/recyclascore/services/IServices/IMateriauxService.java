@@ -10,5 +10,4 @@ public interface IMateriauxService {
     List<Materiaux> findAll();
     Optional<Materiaux> findById(int id);
     void save(MateriauxDTO materiauxDTO);
-    void delete(int id);
 }

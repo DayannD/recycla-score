@@ -2,9 +2,11 @@ package com.simplon.recyclascore.web.controller;
 
 import com.simplon.recyclascore.models.DTO.MateriauxDTO;
 import com.simplon.recyclascore.services.IServices.IMateriauxService;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 @RestController()
 @AllArgsConstructor
@@ -19,7 +21,11 @@ public class AdminController {
    */
   @PostMapping()
   @ResponseStatus(HttpStatus.CREATED)
-  public void createMateriaux(@RequestBody MateriauxDTO materiauxDTO) {
-    this.materiauxService.save(materiauxDTO);
+  public void createMateriaux(@Valid @RequestBody MateriauxDTO materiauxDTO) {
+    try {
+      this.materiauxService.save(materiauxDTO);
+    } catch (IllegalArgumentException e) {
+      throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
+    }
   }
 }

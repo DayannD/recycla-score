@@ -32,9 +32,4 @@ public class MateriauxService implements IMateriauxService {
     public void save(MateriauxDTO materiauxDTO) {
         this.materiauxRepository.save(this.materiauxMapper.toEntity(materiauxDTO));
     }
-
-    @Override
-    public void delete(int id) {
-        materiauxRepository.deleteById(id);
-    }
 }

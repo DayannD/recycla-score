@@ -32,9 +32,9 @@ public class MonoMaterialController {
      * @return Iterable<MonoMaterial>
      * @GetMapping("/{material}") : récupère tous les monomaterials en fonction du material
      */
-    @GetMapping("/{material}")
+    @GetMapping("/material/{material}")
     public Iterable<MonoMaterial> getAllMonoMaterialsByMarerial(@PathVariable String material) {
-        return this.monoMaterialService.getAllMonoMaterialsByMarerial(EnumMaterial.valueOf(material));
+        return this.monoMaterialService.getAllMonoMaterialsByMaterial(EnumMaterial.valueOf(material));
     }
 
     /**

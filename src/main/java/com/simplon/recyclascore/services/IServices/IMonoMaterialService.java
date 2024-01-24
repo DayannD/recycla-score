@@ -15,5 +15,5 @@ public interface IMonoMaterialService {
 
     Iterable<MonoMaterial> getAllMonoMaterials();
 
-    Iterable<MonoMaterial> getAllMonoMaterialsByMarerial(EnumMaterial material);
+    Iterable<MonoMaterial> getAllMonoMaterialsByMaterial(EnumMaterial material);
 }
