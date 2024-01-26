@@ -43,6 +43,6 @@ jobs:
       run: mvn -B package --file pom.xml
     - name: Build and analyze
       env:
-       SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-       SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+       SONAR_TOKEN: sqp_15b2d8a1507e615c0394d8fd019129047d6a8fda
+       SONAR_HOST_URL: http://localhost:9000
       run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=DayannD_recycla-score_AY1Gl665-yvVdE_JuAAi -Dsonar.projectName='recycla-score'
