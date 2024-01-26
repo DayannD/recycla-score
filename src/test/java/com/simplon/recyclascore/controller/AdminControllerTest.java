@@ -17,12 +17,15 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
 @ExtendWith(SpringExtension.class)
-public class AdminControllerTest {
+class AdminControllerTest {
 
   @InjectMocks
   private AdminController adminController;
@@ -39,8 +42,8 @@ public class AdminControllerTest {
   }
 
   @Test
-  public void createMateriaux_HappyPath() throws Exception {
-    MateriauxDTO materiauxDTO = new MateriauxDTO("Wood", "Recycle", 10.0f, 20.0f);
+  void createMateriaux_HappyPath() throws Exception {
+    doNothing().when(materiauxService).save(any(MateriauxDTO.class));
 
     mockMvc.perform(post("/api/admin")
         .contentType(MediaType.APPLICATION_JSON)
@@ -49,7 +52,7 @@ public class AdminControllerTest {
   }
 
   @Test
-  public void createMateriaux_InvalidInput_ReturnsBadRequest() throws Exception {
+  void createMateriaux_InvalidInput_ReturnsBadRequest() throws Exception {
     mockMvc.perform(post("/api/admin")
         .contentType(MediaType.APPLICATION_JSON)
         .content("{\"nomMateriau\":\"\",\"typeRecyclage\":\"\",\"coutRecyclage\":-1,\"energieRecyclage\":-1}"))
@@ -57,7 +60,7 @@ public class AdminControllerTest {
   }
 
   @Test
-  public void createMateriaux_EmptyBody() throws Exception {
+  void createMateriaux_EmptyBody() throws Exception {
     mockMvc.perform(post("/api/admin")
         .contentType(MediaType.APPLICATION_JSON)
         .content("{}"))
@@ -65,7 +68,7 @@ public class AdminControllerTest {
   }
 
   @Test
-  public void createMateriaux_MissingFields() throws Exception {
+  void createMateriaux_MissingFields() throws Exception {
     mockMvc.perform(post("/api/admin")
         .contentType(MediaType.APPLICATION_JSON)
         .content("{\"nomMateriau\":\"Wood\"}"))

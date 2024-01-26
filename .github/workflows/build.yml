@@ -37,5 +37,11 @@ jobs:
        path: ~/.m2
        key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
        restore-keys: ${{ runner.os }}-m2
+    - name: Wait for MySQL
+      uses: jakejarvis/wait-action@master
+      with:
+       time: '30s'
+       host: mysql
+       port: 3306
     - name: Build with Maven
       run: mvn -B package --file pom.xml
