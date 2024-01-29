@@ -30,9 +30,7 @@ public class MateriauxController {
      * @GetMapping("/{id}") : récupère un materiaux en fonction de son id
      */
     @GetMapping("/{id}")
-    public ResponseEntity<Materiaux> getMateriauxById(@PathVariable int id) {
-        return this.materiauxService.findById(id)
-                .map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.notFound().build());
+    public Materiaux getMateriauxById(@PathVariable int id) {
+        return this.materiauxService.findById(id);
     }
 }

@@ -24,8 +24,8 @@ public class MateriauxService implements IMateriauxService {
     }
 
     @Override
-    public Optional<Materiaux> findById(int id) {
-        return materiauxRepository.findById(id);
+    public Materiaux findById(int id) {
+        return materiauxRepository.findById(id).orElse(null);
     }
 
     @Override

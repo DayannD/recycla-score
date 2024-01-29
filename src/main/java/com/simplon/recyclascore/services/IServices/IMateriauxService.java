@@ -8,6 +8,6 @@ import java.util.Optional;
 
 public interface IMateriauxService {
     List<Materiaux> findAll();
-    Optional<Materiaux> findById(int id);
+    Materiaux findById(int id);
     void save(MateriauxDTO materiauxDTO);
 }
