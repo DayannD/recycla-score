@@ -16,8 +16,6 @@
 		<maven.compiler.source>17</maven.compiler.source>
 		<maven.compiler.target>17</maven.compiler.target>
 		<org.mapstruct.version>1.5.5.Final</org.mapstruct.version>
-		<sonar.host.url>http://localhost:9000</sonar.host.url>
-		<sonar.login>sqp_e6787a84a26f54211c7919769f5d12fbcf3e7f35</sonar.login>
 	</properties>
 	<dependencies>
 		<dependency>
