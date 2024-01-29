@@ -41,8 +41,8 @@ jobs:
        port: 3306
     - name: Build with Maven
       run: mvn -B package --file pom.xml
-    - name: Build and analyze
-      env:
-       SONAR_TOKEN: sqp_e6787a84a26f54211c7919769f5d12fbcf3e7f35
-       SONAR_HOST_URL: http://localhost:9000
-      run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=DayannD_recycla-score_AY1Gl665-yvVdE_JuAAi -Dsonar.projectName='recycla-score'
+#    - name: Build and analyze
+#      env:
+#       SONAR_TOKEN: sqp_e6787a84a26f54211c7919769f5d12fbcf3e7f35
+#       SONAR_HOST_URL: http://localhost:9000
+#      run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=DayannD_recycla-score_AY1Gl665-yvVdE_JuAAi -Dsonar.projectName='recycla-score'
