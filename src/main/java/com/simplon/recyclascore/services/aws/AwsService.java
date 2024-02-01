@@ -24,8 +24,8 @@ public class AwsService {
   private final String bucketName = "recycla-score";
   private final String bucketRegion = "eu-west-3";
   private final AWSCredentials credentials = new BasicAWSCredentials(
-    "AKIAXUZGHKKVUEUI36L7",
-    "kOcm4LY9ZP9Ka0Kj+ovCkZNXpSe2l4wDcuoBWLHy"
+    System.getenv("AWS_KEY"),
+    System.getenv("AWS_SECRET")
   );
   private final AmazonS3 s3client = AmazonS3ClientBuilder
     .standard()
