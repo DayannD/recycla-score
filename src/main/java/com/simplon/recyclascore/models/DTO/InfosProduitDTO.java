@@ -8,7 +8,7 @@ public record InfosProduitDTO(
   Float scoreRecyclabilite,
   Float poids,
   Float volume,
-  String urlImage,
+  byte[] file,
   List<MateriauQuantiteDTO> materiaux
 ) {
 }

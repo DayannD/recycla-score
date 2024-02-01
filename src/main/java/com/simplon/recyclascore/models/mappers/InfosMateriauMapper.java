@@ -18,8 +18,8 @@ public interface InfosMateriauMapper {
   @Mapping(target = "scoreRecyclabilite", source = "produit.scoreRecyclabilite")
   @Mapping(target = "poids", source = "produit.poids")
   @Mapping(target = "volume", source = "produit.volume")
-  @Mapping(target = "urlImage", source = "produit.urlImage")
+  @Mapping(target = "file", source = "file")
   @Mapping(target = "materiaux", source = "materiaux")
-  InfosProduitDTO toInfosProduitDTO(Produit produit, List<MateriauQuantiteDTO> materiaux);
+  InfosProduitDTO toInfosProduitDTO(Produit produit, List<MateriauQuantiteDTO> materiaux,byte[] file);
 }
 

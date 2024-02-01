@@ -2,6 +2,7 @@ package com.simplon.recyclascore.services;
 
 import com.simplon.recyclascore.models.DTO.InfosProduitDTO;
 import com.simplon.recyclascore.models.DTO.MateriauQuantiteDTO;
+import com.simplon.recyclascore.models.DTO.ProduitOutDTO;
 import com.simplon.recyclascore.models.DTO.ProduitsDTO;
 import com.simplon.recyclascore.models.Enum.EnumTag;
 import com.simplon.recyclascore.models.Produit;
@@ -9,16 +10,23 @@ import com.simplon.recyclascore.models.ProduitMateriaux;
 import com.simplon.recyclascore.models.mappers.InfosMateriauMapper;
 import com.simplon.recyclascore.models.mappers.MateriauxMapper;
 import com.simplon.recyclascore.models.mappers.ProduitMapper;
+import com.simplon.recyclascore.models.mappers.ProduitOutMapper;
 import com.simplon.recyclascore.repositories.IMateriauxRepository;
 import com.simplon.recyclascore.repositories.IProduitMateriauxRepository;
 import com.simplon.recyclascore.repositories.IProduitRepository;
 import com.simplon.recyclascore.services.IServices.IProduitService;
+import com.simplon.recyclascore.services.aws.AwsService;
+import com.simplon.recyclascore.utils.Utils;
 import io.jsonwebtoken.lang.Arrays;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -30,6 +38,8 @@ public class ProduitService implements IProduitService {
   private final InfosMateriauMapper infosMateriauMapper;
   private final MateriauxMapper materiauxMapper;
   private final ProduitMapper produitMapper;
+  private final AwsService awsService;
+  private final ProduitOutMapper produitOutMapper;
 
   @Override
   public Optional<InfosProduitDTO> findByName(String nomProduit) {
@@ -44,13 +54,19 @@ public class ProduitService implements IProduitService {
       )).toList();
 
     return Optional.of(
-      this.infosMateriauMapper.toInfosProduitDTO(produit.get(), materiauEtQuantites)
+      this.infosMateriauMapper.toInfosProduitDTO(produit.get(), materiauEtQuantites, this.awsService.downloadFile(produit.get().getUrlImage()))
     );
   }
 
+
   @Override
-  public List<ProduitsDTO> getALlProduits(EnumTag tag) {
-    return this.produitMapper.toDTO(this.produitRepository.findAllByTag(tag));
+  public List<ProduitOutDTO> getALlProduits(EnumTag tag) {
+    List<Produit> produits = this.produitRepository.findAllByTag(tag);
+    List<ProduitOutDTO> produitsOutDTO = new ArrayList<>();
+    for (Produit produit : produits) {
+       produitsOutDTO.add(this.produitOutMapper.toDTO(produit, this.awsService.downloadFile(produit.getUrlImage())));
+    }
+    return produitsOutDTO;
   }
 
   @Override
@@ -71,5 +87,23 @@ public class ProduitService implements IProduitService {
       return this.getTag();
     }
     return tag;
+  }
+
+  @Override
+  public void save(ProduitsDTO produitsDTO) throws IOException {
+    File file;
+    String fileName;
+    file = Utils.convertMultiPartToFile(produitsDTO.file());
+    fileName = Utils.getUniqueName(Objects.requireNonNull(produitsDTO.file().getOriginalFilename()));
+
+    try{
+      this.awsService.uploadFile(file, fileName);
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+
+
+
+    this.produitRepository.save(this.produitMapper.toEntity(produitsDTO, fileName));
   }
 }

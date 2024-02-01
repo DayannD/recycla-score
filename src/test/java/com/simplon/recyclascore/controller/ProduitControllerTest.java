@@ -55,7 +55,7 @@ class ProduitControllerTest {
       1.0f,
       1.0f,
       1.0f,
-      "urlImage",
+      new byte[0],
       new ArrayList<>()
     )));
 
