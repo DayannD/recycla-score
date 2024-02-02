@@ -40,7 +40,7 @@ public class UserController {
   public void createUtilisateur(@Valid @RequestBody Utilisateur utilisateur) {
     try {
       utilisateurService.createUtilisateur(utilisateur);
-    }catch (Exception e) {
+    } catch (Exception e) {
       log.warn(e.getMessage());
     }
   }
@@ -55,7 +55,7 @@ public class UserController {
     try {
       validationService.activateUtilisateur(code);
       return ResponseEntity.ok("Votre compte à était activer");
-    }catch (InvalidCodeException e) {
+    } catch (InvalidCodeException e) {
       log.warn("Échec de l'activation: {}", e.getMessage());
       return ResponseEntity.badRequest().body("Échec de l'activation : " + e.getMessage());
     } catch (Exception e) {
@@ -81,7 +81,7 @@ public class UserController {
       if (!utilisateurService.actifCompte(connexionUserDTO.username())) {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Votre compte n'est pas actif");
       }
-      Map<String,String> token = jwtService.createToken(connexionUserDTO.username());
+      Map<String, String> token = jwtService.createToken(connexionUserDTO.username());
 
       log.info(token.toString());
       Cookie cookie = new Cookie("token", token.get("Bearer"));
@@ -98,11 +98,14 @@ public class UserController {
   }
 
   @PostMapping("/deconnexion")
-  public ResponseEntity<String> deconnexionUtilisateur(HttpServletResponse response) {
-    Cookie cookie = new Cookie("token", null);
-    cookie.setPath("/");
-    cookie.setMaxAge(0);
-    response.addCookie(cookie);
-    return ResponseEntity.ok("Vous êtes déconnecté");
+  public void deconnexionUtilisateur(HttpServletResponse response) {
+    try {
+      Cookie cookie = new Cookie("token", null);
+      cookie.setPath("/");
+      cookie.setMaxAge(0);
+      response.addCookie(cookie);
+    } catch (Exception e) {
+      log.warn(e.getMessage());
+    }
   }
 }
