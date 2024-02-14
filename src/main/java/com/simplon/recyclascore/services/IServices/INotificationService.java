@@ -5,4 +5,6 @@ import jakarta.mail.MessagingException;
 
 public interface INotificationService {
   public void sendNotification(Validation validation) throws MessagingException;
+
+  void sendNotificationNewPassword(String email) throws MessagingException;
 }

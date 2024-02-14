@@ -6,6 +6,7 @@ import com.simplon.recyclascore.models.MonoMaterial;
 import com.simplon.recyclascore.services.IServices.IMonoMaterialService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -15,16 +16,6 @@ public class MonoMaterialController {
 
     private final IMonoMaterialService monoMaterialService;
 
-    /**
-     * @param monoMaterialDTO
-     * @return String
-     * @PostMapping("") : crée un monomaterial
-     */
-    @PostMapping("")
-    public String addMonoMaterial(@Valid @RequestBody MonoMaterialDTO monoMaterialDTO) {
-        this.monoMaterialService.addMonoMaterial(monoMaterialDTO);
-        return "ok";
-    }
 
 
     /**

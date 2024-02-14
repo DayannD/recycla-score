@@ -2,7 +2,6 @@ package com.simplon.recyclascore.web.controller;
 
 import com.simplon.recyclascore.models.DTO.InfosProduitDTO;
 import com.simplon.recyclascore.models.DTO.ProduitOutDTO;
-import com.simplon.recyclascore.models.DTO.ProduitsDTO;
 import com.simplon.recyclascore.models.Enum.EnumTag;
 import com.simplon.recyclascore.services.IServices.IProduitService;
 import lombok.AllArgsConstructor;
@@ -28,13 +27,13 @@ private final IProduitService produitService;
    */
   @GetMapping("/{tag}")
   public ResponseEntity<List<ProduitOutDTO>> getAllProduits(@PathVariable EnumTag tag) {
-    List<ProduitOutDTO> produitOutDTO = this.produitService.getALlProduits(tag);
+    List<ProduitOutDTO> produitOutDTO = this.produitService.getAllProduits(tag);
     for (ProduitOutDTO produit : produitOutDTO) {
       log.info(produit.file().toString());
       log.info(produit.file().length + "");
       int length = produit.file().length;
     }
-    return ResponseEntity.ok(this.produitService.getALlProduits(tag));
+    return ResponseEntity.ok(this.produitService.getAllProduits(tag));
   }
 
   /**
@@ -45,6 +44,19 @@ private final IProduitService produitService;
   @GetMapping("/infos/{name}")
   public ResponseEntity<InfosProduitDTO> getProduitByName(@PathVariable String name) {
     return this.produitService.findByName(name)
+      .map(ResponseEntity::ok)
+      .orElseGet(() -> ResponseEntity.notFound().build());
+  }
+
+  @GetMapping("/all")
+  public ResponseEntity<List<ProduitOutDTO>> getAllProduits() {
+    return ResponseEntity.ok(this.produitService.getAllProduits());
+  }
+
+  @GetMapping("/details/{id}")
+  public ResponseEntity<InfosProduitDTO> getProduitById(@PathVariable int id) {
+    log.warn("PRODUIT DTO : " + this.produitService.findById(id).get());
+    return this.produitService.findById(id)
       .map(ResponseEntity::ok)
       .orElseGet(() -> ResponseEntity.notFound().build());
   }

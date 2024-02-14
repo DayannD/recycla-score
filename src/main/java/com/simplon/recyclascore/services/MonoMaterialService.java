@@ -18,7 +18,7 @@ public class MonoMaterialService implements IMonoMaterialService {
 
     @Override
     public void addMonoMaterial(MonoMaterialDTO monoMaterialDTO) {
-        monoMaterialRepository.save(this.monoMaterialMapper.toEntity(monoMaterialDTO));
+        this.monoMaterialRepository.save(this.monoMaterialMapper.toEntity(monoMaterialDTO));
     }
 
     @Override

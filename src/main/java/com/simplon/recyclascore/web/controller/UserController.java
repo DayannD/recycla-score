@@ -108,4 +108,13 @@ public class UserController {
       log.warn(e.getMessage());
     }
   }
+
+  @PostMapping("/forgot-password/{email}")
+  public void forgotPassword(@PathVariable String email) {
+    try {
+      utilisateurService.forgotPassword(email);
+    } catch (Exception e) {
+      log.warn(e.getMessage());
+    }
+  }
 }

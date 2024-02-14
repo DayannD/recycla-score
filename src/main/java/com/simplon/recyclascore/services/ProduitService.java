@@ -58,13 +58,22 @@ public class ProduitService implements IProduitService {
     );
   }
 
+  public List<ProduitOutDTO> getAllProduits() {
+    List<Produit> produits = this.produitRepository.findAll();
+    List<ProduitOutDTO> produitsOutDTO = new ArrayList<>();
+    for (Produit produit : produits) {
+      produitsOutDTO.add(this.produitOutMapper.toDTO(produit, this.awsService.downloadFile(produit.getUrlImage())));
+    }
+    return produitsOutDTO;
+  }
+
 
   @Override
-  public List<ProduitOutDTO> getALlProduits(EnumTag tag) {
+  public List<ProduitOutDTO> getAllProduits(EnumTag tag) {
     List<Produit> produits = this.produitRepository.findAllByTag(tag);
     List<ProduitOutDTO> produitsOutDTO = new ArrayList<>();
     for (Produit produit : produits) {
-       produitsOutDTO.add(this.produitOutMapper.toDTO(produit, this.awsService.downloadFile(produit.getUrlImage())));
+      produitsOutDTO.add(this.produitOutMapper.toDTO(produit, this.awsService.downloadFile(produit.getUrlImage())));
     }
     return produitsOutDTO;
   }
@@ -96,14 +105,40 @@ public class ProduitService implements IProduitService {
     file = Utils.convertMultiPartToFile(produitsDTO.file());
     fileName = Utils.getUniqueName(Objects.requireNonNull(produitsDTO.file().getOriginalFilename()));
 
-    try{
+    try {
       this.awsService.uploadFile(file, fileName);
     } catch (Exception e) {
       e.printStackTrace();
     }
 
 
-
     this.produitRepository.save(this.produitMapper.toEntity(produitsDTO, fileName));
+  }
+
+  @Override
+  public String[] getAlltags() {
+    String[] tags = new String[EnumTag.values().length];
+    for (int i = 0; i < EnumTag.values().length; i++) {
+      tags[i] = EnumTag.values()[i].toString();
+    }
+
+    return tags;
+  }
+
+  @Override
+  public Optional<InfosProduitDTO> findById(int id) {
+    Optional<Produit> produit = this.produitRepository.findById(id);
+    if (produit.isEmpty()) {
+      return Optional.empty();
+    }
+    List<ProduitMateriaux> listeProduitMateriaux = this.produitMateriauxRepository.findByIdProduit_Id(produit.get().getId());
+    List<MateriauQuantiteDTO> materiauEtQuantites = listeProduitMateriaux.stream()
+      .map(pm -> new MateriauQuantiteDTO(
+        this.materiauxMapper.toDTO(this.materiauxRepository.findById(pm.getIdMateriau().getId()).get()),
+        pm.getQuantite()
+      )).toList();
+    return Optional.of(
+      this.infosMateriauMapper.toInfosProduitDTO(produit.get(), materiauEtQuantites, this.awsService.downloadFile(produit.get().getUrlImage()))
+    );
   }
 }

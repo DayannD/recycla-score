@@ -48,7 +48,7 @@ public class JwtFilter extends OncePerRequestFilter {
   protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
     String token = null;
     String username = null;
-    boolean isTokenExpired = true;
+    boolean isTokenExpired = false;
 
     final Cookie[] cookies = request.getCookies();
     if (cookies != null) {
@@ -62,10 +62,9 @@ public class JwtFilter extends OncePerRequestFilter {
       }
     }
 
-    // TODO : Verifier si le token est expiré mais fait des bug d'authenfication parfois à cause de ce if
-//    if (isTokenExpired) {
-//      response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Token expiré ou invalide");
-//    }
+    if (isTokenExpired) {
+      response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Token expiré ou invalide");
+    }
 
     if (!isTokenExpired && username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
       UserDetails userDetails = utilisateurService.loadUserByUsername(username);

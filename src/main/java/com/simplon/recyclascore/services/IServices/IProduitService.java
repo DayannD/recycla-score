@@ -12,9 +12,15 @@ import java.util.Optional;
 public interface IProduitService {
   Optional<InfosProduitDTO> findByName(String name);
 
-  List<ProduitOutDTO> getALlProduits(EnumTag tag);
+  List<ProduitOutDTO> getAllProduits(EnumTag tag);
+
+  List<ProduitOutDTO> getAllProduits();
 
   void setTagProduits();
 
   void save(ProduitsDTO produitsDTO) throws IOException;
+
+  Optional<InfosProduitDTO> findById(int id);
+
+  String[] getAlltags();
 }
