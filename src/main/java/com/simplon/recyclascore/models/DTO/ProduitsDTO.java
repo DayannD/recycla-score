@@ -16,8 +16,7 @@ public record ProduitsDTO(
 @Min(0) Float scoreRecyclabilite,
 @Min(1) Float poids,
 @Min(1) Float volume,
-@NotNull MultipartFile file,
+MultipartFile file,
 @NotNull List<EnumTag> tags
-
 ) {
 }

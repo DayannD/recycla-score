@@ -1,13 +1,18 @@
 package com.simplon.recyclascore.web.controller;
 
+import com.simplon.recyclascore.exception.JwtExpiredException;
 import com.simplon.recyclascore.models.DTO.ConnexionUserDTO;
 import com.simplon.recyclascore.config.security.JwtService;
 import com.simplon.recyclascore.exception.InvalidCodeException;
+import com.simplon.recyclascore.models.DTO.TokenDTO;
+import com.simplon.recyclascore.models.RefreshToken;
 import com.simplon.recyclascore.models.Utilisateur;
+import com.simplon.recyclascore.services.IServices.IRefreshTokenService;
 import com.simplon.recyclascore.services.IServices.IUtilisateurService;
 import com.simplon.recyclascore.services.IServices.IValidationService;
 
 import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -29,6 +34,7 @@ public class UserController {
   private final IUtilisateurService utilisateurService;
   private final IValidationService validationService;
   private final AuthenticationManager authenticationManager;
+  private final IRefreshTokenService refreshTokenService;
   private final JwtService jwtService;
 
   /**
@@ -82,7 +88,7 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Votre compte n'est pas actif");
       }
       Map<String, String> token = jwtService.createToken(connexionUserDTO.username());
-
+      this.refreshTokenService.createRefreshToken(connexionUserDTO.username(), token.get("Bearer"));
       log.info(token.toString());
       Cookie cookie = new Cookie("token", token.get("Bearer"));
       // a mettre quand on sera en https
@@ -95,6 +101,30 @@ public class UserController {
     } else {
       return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Identifiants incorrects");
     }
+  }
+
+  @PostMapping("/refresh-token")
+  public ResponseEntity<String> refreshToken(@RequestBody TokenDTO token, HttpServletResponse response) throws JwtExpiredException {
+    if (token.token().isEmpty()) return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Token was empty");
+    return this.refreshTokenService.findByToken(token.token())
+        .map(refreshToken -> {
+          try {
+            System.out.println("REFRESH TOKEN : " + this.refreshTokenService.verifyExpiration(refreshToken));
+            return this.refreshTokenService.verifyExpiration(refreshToken);
+          } catch (JwtExpiredException e) {
+            throw new RuntimeException(e);
+          }
+        })
+        .map(RefreshToken::getUser)
+        .map(user -> {
+          String newToken = this.jwtService.createToken(user.getUsername()).get("Bearer");
+          this.refreshTokenService.createRefreshToken(user.getUsername(), newToken);
+          Cookie cookie = new Cookie("token", newToken);
+          log.warn("REFRESH TOKEN : " + newToken);
+          cookie.setPath("/");
+          response.addCookie(cookie);
+          return ResponseEntity.ok("Token rafraîchi");
+        }).orElse(ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Token invalide"));
   }
 
   @PostMapping("/deconnexion")
@@ -112,7 +142,7 @@ public class UserController {
   @PostMapping("/forgot-password/{email}")
   public void forgotPassword(@PathVariable String email) {
     try {
-      utilisateurService.forgotPassword(email);
+      this.utilisateurService.forgotPassword(email);
     } catch (Exception e) {
       log.warn(e.getMessage());
     }

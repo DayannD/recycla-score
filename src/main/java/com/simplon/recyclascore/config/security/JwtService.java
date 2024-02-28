@@ -44,7 +44,7 @@ public class JwtService {
    */
   private Map<String, String> generateToken(Utilisateur utilisateur) {
     final long currentTime = System.currentTimeMillis();
-    final long expirationTime = currentTime + 1000 * 60 * 30;
+    final long expirationTime = currentTime + 1000 * 60 * 1;
     log.warn("VOICI L'UTILISATEUR " + utilisateur.getRole().getLibelle().toString());
     final Map<String, Object> claims = Map.of(
       "token", "token",
@@ -61,6 +61,8 @@ public class JwtService {
       .setClaims(claims)
       .signWith(getKey(), SignatureAlgorithm.HS256)
       .compact();
+
+
 
     return Map.of("Bearer", bearer);
   }

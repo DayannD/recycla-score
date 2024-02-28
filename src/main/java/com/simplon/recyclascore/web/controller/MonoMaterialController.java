@@ -48,17 +48,6 @@ public class MonoMaterialController {
     }
 
     /**
-     * @param monoMaterial
-     * @return String
-     * @PutMapping("") : modifie un monomaterial
-     */
-    @PutMapping("")
-    public String updateMonoMaterial(@RequestBody MonoMaterial monoMaterial) {
-        this.monoMaterialService.updateMonoMaterial(monoMaterial);
-        return "ok";
-    }
-
-    /**
      * @param id
      * @return String
      * @DeleteMapping("/{id}") : supprime un monomaterial en fonction de son id

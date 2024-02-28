@@ -12,6 +12,8 @@ import com.amazonaws.services.s3.model.S3Object;
 import com.amazonaws.services.s3.model.S3ObjectInputStream;
 import com.simplon.recyclascore.utils.Utils;
 import lombok.AllArgsConstructor;
+import lombok.extern.java.Log;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -19,6 +21,7 @@ import java.io.*;
 import java.util.List;
 
 @Service
+@Slf4j
 @AllArgsConstructor
 public class AwsService {
   private final String bucketName = "recycla-score";
@@ -55,7 +58,17 @@ public class AwsService {
     }
   }
 
+  public void deleteFile(String fileName) {
+    try {
+      log.warn("DELETING FILE: " + fileName);
+      s3client.deleteObject(bucketName, fileName);
+    } catch (AmazonServiceException e) {
+      throw new RuntimeException("Error in deleting file: " + fileName, e);
+    }
+  }
+
   public byte[] downloadFile(String fileName) {
+    log.warn("DOWNLOADING FILE: " + fileName);
     S3Object s3Object = s3client.getObject(bucketName, fileName);
     S3ObjectInputStream inputStream = s3Object.getObjectContent();
 

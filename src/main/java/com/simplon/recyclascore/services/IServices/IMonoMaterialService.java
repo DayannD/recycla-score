@@ -11,6 +11,8 @@ public interface IMonoMaterialService {
 
     void deleteMonoMaterial(MonoMaterial monoMaterial);
 
+    void deleteMonoMaterialById(int id);
+
     MonoMaterial getMonoMaterialById(int id);
 
     Iterable<MonoMaterial> getAllMonoMaterials();

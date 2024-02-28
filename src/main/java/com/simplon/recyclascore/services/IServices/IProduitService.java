@@ -22,5 +22,7 @@ public interface IProduitService {
 
   Optional<InfosProduitDTO> findById(int id);
 
+  void deleteById(int id);
+
   String[] getAlltags();
 }

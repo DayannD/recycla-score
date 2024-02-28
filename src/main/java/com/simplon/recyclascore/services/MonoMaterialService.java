@@ -32,6 +32,15 @@ public class MonoMaterialService implements IMonoMaterialService {
     }
 
     @Override
+    public void deleteMonoMaterialById(int id) {
+        try {
+            this.monoMaterialRepository.deleteById(id);
+        } catch (IllegalArgumentException e) {
+            throw new IllegalArgumentException("The id is not valid");
+        }
+    }
+
+    @Override
     public MonoMaterial getMonoMaterialById(int id) {
         return monoMaterialRepository.findById(id).orElse(null);
     }

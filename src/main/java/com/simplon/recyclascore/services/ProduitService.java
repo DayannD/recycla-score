@@ -100,19 +100,19 @@ public class ProduitService implements IProduitService {
 
   @Override
   public void save(ProduitsDTO produitsDTO) throws IOException {
-    File file;
-    String fileName;
-    file = Utils.convertMultiPartToFile(produitsDTO.file());
-    fileName = Utils.getUniqueName(Objects.requireNonNull(produitsDTO.file().getOriginalFilename()));
-
-    try {
-      this.awsService.uploadFile(file, fileName);
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
-
-
-    this.produitRepository.save(this.produitMapper.toEntity(produitsDTO, fileName));
+//    File file;
+//    String fileName;
+//    file = Utils.convertMultiPartToFile(produitsDTO.file());
+//    fileName = Utils.getUniqueName(Objects.requireNonNull(produitsDTO.file().getOriginalFilename()));
+//
+//    try {
+//      this.awsService.uploadFile(file, fileName);
+//    } catch (Exception e) {
+//      e.printStackTrace();
+//    }
+//
+//
+//    this.produitRepository.save(this.produitMapper.toEntity(produitsDTO, fileName));
   }
 
   @Override
@@ -140,5 +140,15 @@ public class ProduitService implements IProduitService {
     return Optional.of(
       this.infosMateriauMapper.toInfosProduitDTO(produit.get(), materiauEtQuantites, this.awsService.downloadFile(produit.get().getUrlImage()))
     );
+  }
+
+  @Override
+  public void deleteById(int id) {
+    try {
+      this.awsService.deleteFile(this.produitRepository.findById(id).get().getUrlImage());
+      this.produitRepository.deleteById(id);
+    } catch (IllegalArgumentException e) {
+      throw new IllegalArgumentException("The id is not valid");
+    }
   }
 }

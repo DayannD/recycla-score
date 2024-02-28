@@ -75,6 +75,7 @@ public class SecurityConfig {
             authorize
               .requestMatchers("/inscription").permitAll()
               .requestMatchers("/connexion").permitAll()
+              .requestMatchers("/refresh-token").permitAll()
               .requestMatchers("/activation").permitAll()
               .requestMatchers("/deconnexion").permitAll()
               .requestMatchers("api/admin").hasRole("ADMIN")
@@ -111,5 +112,4 @@ public class SecurityConfig {
     daoAuthenticationProvider.setPasswordEncoder(this.cryptageMotDePasse.passwordEncoder());
     return daoAuthenticationProvider;
   }
-
 }

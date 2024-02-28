@@ -7,10 +7,12 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.http.client.HttpResponseException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpStatusCodeException;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
@@ -45,7 +47,7 @@ public class JwtFilter extends OncePerRequestFilter {
    * @throws IOException
    */
   @Override
-  protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+  protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws IOException, ServletException {
     String token = null;
     String username = null;
     boolean isTokenExpired = false;
@@ -54,9 +56,13 @@ public class JwtFilter extends OncePerRequestFilter {
     if (cookies != null) {
       for (Cookie cookie : cookies) {
         if (cookie.getName().equals("token")) {
-          log.warn("Token trouvé :" + cookie.getValue());
           token = cookie.getValue();
-          isTokenExpired = jwtService.isTokenExpired(token);
+          try {
+            isTokenExpired = jwtService.isTokenExpired(token);
+          } catch (Exception e) {
+            log.error("Error while checking if token is expired", e);
+            throw new HttpResponseException(HttpServletResponse.SC_UNAUTHORIZED, e.getMessage());
+          }
           username = jwtService.lireUsername(token);
         }
       }
@@ -65,7 +71,6 @@ public class JwtFilter extends OncePerRequestFilter {
     if (isTokenExpired) {
       response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Token expiré ou invalide");
     }
-
     if (!isTokenExpired && username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
       UserDetails userDetails = utilisateurService.loadUserByUsername(username);
       log.warn("UserDetails : " + userDetails.getAuthorities());
