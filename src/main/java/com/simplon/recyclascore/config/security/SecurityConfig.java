@@ -68,27 +68,22 @@ public class SecurityConfig {
   public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
     return
       httpSecurity
-        // Disable CSRF protection since tokens are immune to it
-        // CSRF cross-site request forgery (falsification de requête intersite)
+        .cors().and()
         .csrf(AbstractHttpConfigurer::disable)
-        // Authorise les requêtes
         .authorizeHttpRequests(
           authorize ->
-            //authorise tout le monde à accéder à la page d'inscription
             authorize
-              .requestMatchers("/admin/**").hasRole("ADMIN")
               .requestMatchers("/inscription").permitAll()
               .requestMatchers("/connexion").permitAll()
+              .requestMatchers("/refresh-token").permitAll()
               .requestMatchers("/activation").permitAll()
               .requestMatchers("/deconnexion").permitAll()
+              .requestMatchers("api/admin").hasRole("ADMIN")
+              .requestMatchers("api/aws").hasRole("ADMIN")
               .anyRequest().authenticated())
-        //
         .sessionManagement(sessionManagement ->
           sessionManagement
-            // Disable session creation
             .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-        // Ajoute le filtre JWT avant le filtre d'authentification ce qui permet de vérifier le token avant de vérifier l'authentification
-        // et donc de ne pas avoir à vérifier l'authentification si le token est invalide
         .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
         .build();
   }
@@ -112,9 +107,9 @@ public class SecurityConfig {
   @Bean
   public AuthenticationProvider authenticationProvider(UserDetailsService userDetailsService) {
     DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
+    System.out.println("userDetailsService: " + userDetailsService);
     daoAuthenticationProvider.setUserDetailsService(userDetailsService);
     daoAuthenticationProvider.setPasswordEncoder(this.cryptageMotDePasse.passwordEncoder());
     return daoAuthenticationProvider;
   }
-
 }

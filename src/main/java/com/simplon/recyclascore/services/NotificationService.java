@@ -40,4 +40,23 @@ public class NotificationService implements INotificationService {
 
     javaMailSender.send(mimeMessage);
   }
+
+  public void sendNotificationNewPassword(String email) throws MessagingException {
+    MimeMessage mimeMessage = javaMailSender.createMimeMessage();
+    MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, "utf-8");
+
+    helper.setFrom("no-reply@cjillo.etch");
+    helper.setTo(email);
+    helper.setSubject("Réinitialisation de votre mot de passe");
+
+    String htmlContent = "Bonjour,<br><br>" +
+      "Pour réinitialiser votre mot de passe, veuillez cliquer sur le lien ci-dessous :<br>" +
+      "<a href='http://localhost:8080/reset-password?email=" + email + "'>ici</a><br><br>" +
+      "Cordialement,<br>" +
+      "L'équipe Recyclascore";
+
+    helper.setText(htmlContent, true); // true signifie que le contenu est en HTML
+
+    javaMailSender.send(mimeMessage);
+  }
 }

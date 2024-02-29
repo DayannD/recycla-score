@@ -6,6 +6,7 @@ import com.simplon.recyclascore.models.Enum.EnumRole;
 import com.simplon.recyclascore.models.Role;
 import com.simplon.recyclascore.models.Utilisateur;
 import com.simplon.recyclascore.repositories.IUtilisateurRepository;
+import com.simplon.recyclascore.services.IServices.INotificationService;
 import com.simplon.recyclascore.services.IServices.IUtilisateurService;
 import com.simplon.recyclascore.services.IServices.IValidationService;
 import jakarta.mail.MessagingException;
@@ -27,6 +28,7 @@ public class UtilisateurService implements IUtilisateurService, UserDetailsServi
   private final BCryptPasswordEncoder bCryptPasswordEncoder;
   private final IUtilisateurRepository utilisateurRepository;
   private final IValidationService validationService;
+  private final INotificationService notificationService;
 
   /**
    * Créer un utilisateur
@@ -63,6 +65,7 @@ public class UtilisateurService implements IUtilisateurService, UserDetailsServi
    */
   @Override
   public Utilisateur loadUserByUsername(String username) throws UsernameNotFoundException {
+    log.warn("USER userService "+this.utilisateurRepository.findByEmail(username).toString());
     return utilisateurRepository.findByEmail(username)
       .orElseThrow(() -> new UsernameNotFoundException("Utilisateur non trouvé"));
   }
@@ -78,5 +81,19 @@ public class UtilisateurService implements IUtilisateurService, UserDetailsServi
       .orElseThrow(() -> new UsernameNotFoundException("Utilisateur non trouvé"));
     log.warn("voici l'utilisateur : " + utilisateur.isActif());
     return utilisateur.isActif();
+  }
+
+  @Override
+  public void forgotPassword(String email) throws MessagingException {
+    try {
+    Utilisateur utilisateur = utilisateurRepository.findByEmail(email)
+      .orElseThrow(() -> new InvalidEmailException("Cet email n'existe pas"));
+//    if (utilisateur.) {
+//      throw new InvalidEmailException("Cet email n'existe pas");
+//    }
+      this.notificationService.sendNotificationNewPassword(email);
+    } catch (MessagingException e) {
+      log.error("Erreur lors de l'envoi du mail de réinitialisation de mot de passe : {}", e.getMessage());
+    }
   }
 }

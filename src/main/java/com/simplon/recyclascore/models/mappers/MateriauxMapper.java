@@ -1,6 +1,6 @@
 package com.simplon.recyclascore.models.mappers;
 
-import com.simplon.recyclascore.models.DTO.MateriauxDTO;
+import com.simplon.recyclascore.models.dto.MateriauxDTO;
 import com.simplon.recyclascore.models.Materiaux;
 import org.mapstruct.Mapper;
 

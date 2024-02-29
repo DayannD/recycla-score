@@ -10,4 +10,6 @@ public interface IUtilisateurService {
   Utilisateur loadUserByUsername(String username);
 
   boolean actifCompte(String username);
+
+  void forgotPassword(String email) throws MessagingException;
 }

@@ -1,10 +1,8 @@
 package com.simplon.recyclascore.web.controller;
 
-import com.simplon.recyclascore.models.DTO.MonoMaterialDTO;
 import com.simplon.recyclascore.models.Enum.EnumMaterial;
 import com.simplon.recyclascore.models.MonoMaterial;
 import com.simplon.recyclascore.services.IServices.IMonoMaterialService;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,16 +13,6 @@ public class MonoMaterialController {
 
     private final IMonoMaterialService monoMaterialService;
 
-    /**
-     * @param monoMaterialDTO
-     * @return String
-     * @PostMapping("") : crée un monomaterial
-     */
-    @PostMapping("")
-    public String addMonoMaterial(@Valid @RequestBody MonoMaterialDTO monoMaterialDTO) {
-        this.monoMaterialService.addMonoMaterial(monoMaterialDTO);
-        return "ok";
-    }
 
 
     /**
@@ -54,17 +42,6 @@ public class MonoMaterialController {
     @GetMapping("/{id}")
     public MonoMaterial getMonoMaterialById(@PathVariable int id) {
         return this.monoMaterialService.getMonoMaterialById(id);
-    }
-
-    /**
-     * @param monoMaterial
-     * @return String
-     * @PutMapping("") : modifie un monomaterial
-     */
-    @PutMapping("")
-    public String updateMonoMaterial(@RequestBody MonoMaterial monoMaterial) {
-        this.monoMaterialService.updateMonoMaterial(monoMaterial);
-        return "ok";
     }
 
     /**

@@ -1,6 +1,6 @@
 package com.simplon.recyclascore.services;
 
-import com.simplon.recyclascore.models.DTO.MonoMaterialDTO;
+import com.simplon.recyclascore.models.dto.MonoMaterialDTO;
 import com.simplon.recyclascore.models.Enum.EnumMaterial;
 import com.simplon.recyclascore.models.MonoMaterial;
 import com.simplon.recyclascore.models.mappers.MonoMaterialMapper;
@@ -18,7 +18,7 @@ public class MonoMaterialService implements IMonoMaterialService {
 
     @Override
     public void addMonoMaterial(MonoMaterialDTO monoMaterialDTO) {
-        monoMaterialRepository.save(this.monoMaterialMapper.toEntity(monoMaterialDTO));
+        this.monoMaterialRepository.save(this.monoMaterialMapper.toEntity(monoMaterialDTO));
     }
 
     @Override
@@ -29,6 +29,15 @@ public class MonoMaterialService implements IMonoMaterialService {
     @Override
     public void deleteMonoMaterial(MonoMaterial monoMaterial) {
         monoMaterialRepository.delete(monoMaterial);
+    }
+
+    @Override
+    public void deleteMonoMaterialById(int id) {
+        try {
+            this.monoMaterialRepository.deleteById(id);
+        } catch (IllegalArgumentException e) {
+            throw new IllegalArgumentException("The id is not valid");
+        }
     }
 
     @Override
