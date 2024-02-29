@@ -1,4 +1,4 @@
-package com.simplon.recyclascore.models.DTO;
+package com.simplon.recyclascore.models.dto;
 
 import com.simplon.recyclascore.models.Enum.EnumMaterial;
 import jakarta.validation.constraints.NotBlank;

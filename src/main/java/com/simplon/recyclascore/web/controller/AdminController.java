@@ -1,8 +1,8 @@
 package com.simplon.recyclascore.web.controller;
 
-import com.simplon.recyclascore.models.DTO.MateriauxDTO;
-import com.simplon.recyclascore.models.DTO.MonoMaterialDTO;
-import com.simplon.recyclascore.models.DTO.ProduitsDTO;
+import com.simplon.recyclascore.models.dto.MateriauxDTO;
+import com.simplon.recyclascore.models.dto.MonoMaterialDTO;
+import com.simplon.recyclascore.models.dto.ProduitsDTO;
 import com.simplon.recyclascore.models.MonoMaterial;
 import com.simplon.recyclascore.services.IServices.IMateriauxService;
 import com.simplon.recyclascore.services.IServices.IMonoMaterialService;
@@ -10,7 +10,6 @@ import com.simplon.recyclascore.services.IServices.IProduitService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 

@@ -1,7 +1,7 @@
 package com.simplon.recyclascore.web.controller;
 
-import com.simplon.recyclascore.models.DTO.InfosProduitDTO;
-import com.simplon.recyclascore.models.DTO.ProduitOutDTO;
+import com.simplon.recyclascore.models.dto.InfosProduitDTO;
+import com.simplon.recyclascore.models.dto.ProduitOutDTO;
 import com.simplon.recyclascore.models.Enum.EnumTag;
 import com.simplon.recyclascore.services.IServices.IProduitService;
 import lombok.AllArgsConstructor;

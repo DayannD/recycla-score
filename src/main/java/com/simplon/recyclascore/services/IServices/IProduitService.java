@@ -1,8 +1,8 @@
 package com.simplon.recyclascore.services.IServices;
 
-import com.simplon.recyclascore.models.DTO.InfosProduitDTO;
-import com.simplon.recyclascore.models.DTO.ProduitOutDTO;
-import com.simplon.recyclascore.models.DTO.ProduitsDTO;
+import com.simplon.recyclascore.models.dto.InfosProduitDTO;
+import com.simplon.recyclascore.models.dto.ProduitOutDTO;
+import com.simplon.recyclascore.models.dto.ProduitsDTO;
 import com.simplon.recyclascore.models.Enum.EnumTag;
 
 import java.io.IOException;

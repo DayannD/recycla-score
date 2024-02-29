@@ -1,9 +1,7 @@
 package com.simplon.recyclascore.controller;
 
-import com.simplon.recyclascore.models.DTO.MateriauxDTO;
-import com.simplon.recyclascore.models.Materiaux;
+import com.simplon.recyclascore.models.dto.MateriauxDTO;
 import com.simplon.recyclascore.services.IServices.IMateriauxService;
-import com.simplon.recyclascore.services.MateriauxService;
 import com.simplon.recyclascore.web.controller.AdminController;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -19,7 +17,6 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 

@@ -1,10 +1,10 @@
 package com.simplon.recyclascore.web.controller;
 
 import com.simplon.recyclascore.exception.JwtExpiredException;
-import com.simplon.recyclascore.models.DTO.ConnexionUserDTO;
+import com.simplon.recyclascore.models.dto.ConnexionUserDTO;
 import com.simplon.recyclascore.config.security.JwtService;
 import com.simplon.recyclascore.exception.InvalidCodeException;
-import com.simplon.recyclascore.models.DTO.TokenDTO;
+import com.simplon.recyclascore.models.dto.TokenDTO;
 import com.simplon.recyclascore.models.RefreshToken;
 import com.simplon.recyclascore.models.Utilisateur;
 import com.simplon.recyclascore.services.IServices.IRefreshTokenService;
@@ -12,7 +12,6 @@ import com.simplon.recyclascore.services.IServices.IUtilisateurService;
 import com.simplon.recyclascore.services.IServices.IValidationService;
 
 import jakarta.servlet.http.Cookie;
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;

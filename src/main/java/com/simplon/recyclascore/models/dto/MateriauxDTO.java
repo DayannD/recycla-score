@@ -1,4 +1,4 @@
-package com.simplon.recyclascore.models.DTO;
+package com.simplon.recyclascore.models.dto;
 
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;

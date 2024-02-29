@@ -1,7 +1,6 @@
 package com.simplon.recyclascore.services;
 
-import com.simplon.recyclascore.models.DTO.MailDTO;
-import com.simplon.recyclascore.models.Validation;
+import com.simplon.recyclascore.models.dto.MailDTO;
 import com.simplon.recyclascore.services.IServices.IMailService;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;

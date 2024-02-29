@@ -1,6 +1,6 @@
 package com.simplon.recyclascore.services;
 
-import com.simplon.recyclascore.models.DTO.MateriauxDTO;
+import com.simplon.recyclascore.models.dto.MateriauxDTO;
 import com.simplon.recyclascore.models.Materiaux;
 import com.simplon.recyclascore.models.mappers.MateriauxMapper;
 import com.simplon.recyclascore.repositories.IMateriauxRepository;

@@ -1,9 +1,6 @@
 package com.simplon.recyclascore.controller;
 
-import com.simplon.recyclascore.models.DTO.InfosProduitDTO;
-import com.simplon.recyclascore.models.DTO.ProduitsDTO;
-import com.simplon.recyclascore.models.Enum.EnumTag;
-import com.simplon.recyclascore.models.Produit;
+import com.simplon.recyclascore.models.dto.InfosProduitDTO;
 import com.simplon.recyclascore.models.mappers.ProduitMapper;
 import com.simplon.recyclascore.services.IServices.IProduitService;
 import com.simplon.recyclascore.web.controller.ProduitController;

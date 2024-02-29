@@ -1,12 +1,9 @@
 package com.simplon.recyclascore.web.controller;
 
-import com.simplon.recyclascore.models.DTO.MonoMaterialDTO;
 import com.simplon.recyclascore.models.Enum.EnumMaterial;
 import com.simplon.recyclascore.models.MonoMaterial;
 import com.simplon.recyclascore.services.IServices.IMonoMaterialService;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 @RestController

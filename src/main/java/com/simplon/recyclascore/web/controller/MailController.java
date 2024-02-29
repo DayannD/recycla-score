@@ -1,6 +1,6 @@
 package com.simplon.recyclascore.web.controller;
 
-import com.simplon.recyclascore.models.DTO.MailDTO;
+import com.simplon.recyclascore.models.dto.MailDTO;
 import com.simplon.recyclascore.services.IServices.IMailService;
 import jakarta.mail.MessagingException;
 import lombok.AllArgsConstructor;
