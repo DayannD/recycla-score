@@ -2,7 +2,7 @@ name: Recycla-score backend build
 
 on:
   push:
-    branches: [ "master" ]
+    branches: [ "master", "prod" ]
   pull_request:
     branches: [ "master" ]
 
@@ -41,8 +41,15 @@ jobs:
        port: 3306
     - name: Build with Maven
       run: mvn -B package --file pom.xml
-#    - name: Build and analyze
-#      env:
-#       SONAR_TOKEN: sqp_e6787a84a26f54211c7919769f5d12fbcf3e7f35
-#       SONAR_HOST_URL: http://localhost:9000
-#      run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=DayannD_recycla-score_AY1Gl665-yvVdE_JuAAi -Dsonar.projectName='recycla-score'
+    - name: Create Tag and Deploy to AWS
+      if: github.ref == 'refs/heads/prod'
+      run: |
+        TAG_NAME=$(date +v%Y%m%d%H%M%S)
+        git tag $TAG_NAME
+        git push origin $TAG_NAME
+        pip install --upgrade awscli
+        aws configure set aws_access_key_id ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws configure set aws_secret_access_key ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws configure set default.region eu-west-3c
+        aws elasticbeanstalk create-application-version --application-name recycla-score --version-label $TAG_NAME --source-bundle S3Bucket="elasticbeanstalk-eu-west-3-525676794539",S3Key="recycla-score.zip"
+        aws elasticbeanstalk update-environment --application-name recycla-score --environment-name Recycla-score-env --version-label $TAG_NAME
