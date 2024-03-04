@@ -1,1 +1,1 @@
-web: java -jar target/recycla-score.jar
+web: mvn spring-boot:run
